@@ -1,0 +1,2 @@
+base_control:reflector_locate
+-DCATKIN_DEVEL_PREFIX=/home/yujingge/Luckybot_ws/devel -DCMAKE_INSTALL_PREFIX=/home/yujingge/Luckybot_ws/install -G Unix Makefiles
