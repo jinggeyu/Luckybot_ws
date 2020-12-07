@@ -491,6 +491,9 @@ void RegisterReflector::MoveInfoCallback(const geometry_msgs::Twist &msg)
 
 void RegisterReflector::DetReflectorCallback(const reflector_locate::reflector_msgs &msg)
 {
+
+	startT = ros::Time::now();
+
 	int ref_num = msg.id; //检测到的反光板的个数
 	det_dist.resize(ref_num, ref_num-1);
 	float d1,th1,d2,th2;
@@ -513,8 +516,16 @@ void RegisterReflector::DetReflectorCallback(const reflector_locate::reflector_m
 		}
 		if(regist_ID(ref_num))
 		{
+			registerT = ros::Time::now();
+			predict_period_ = (registerT - startT).toSec();
+			std::cout << "静态匹配周期："  << predict_period_ << std::endl;
+
 			std::cout << "initial static regist_ID is" << "\n" << Table_ID << std::endl;	//输出反光板匹配序列
 			compute_pose_linearSVD(msg); 
+
+			locateT = ros::Time::now();
+			predict_period_ = (locateT - registerT).toSec();
+			std::cout << "SVD定位周期："  << predict_period_ << std::endl;
 
 			set_ICP_list(ref_num, msg, set_last);	//对ref_last进行赋值，若flag ==0 ,也将对Table_ID_last赋值（相当于 "初始化 "ref_last、Table_ID_last）
 			pub_path(pose_last, ICP_path, ICP_path_pub);	//ICP定位的初始位姿以及定位失败后的位姿	
@@ -529,18 +540,27 @@ void RegisterReflector::DetReflectorCallback(const reflector_locate::reflector_m
 	{
 		if(regist_ID(ref_num, msg))
 		{
+			registerT = ros::Time::now();
+			predict_period_ = (registerT - startT).toSec();
+			std::cout << "动态匹配周期："  << predict_period_ << std::endl;
+
 			std::cout << "dynamic regist_ID is" << "\n" << Table_ID << std::endl;
 //			compute_pose_linearSVD(msg);
 
 			set_ICP_list(ref_num, msg, set_current);
 			compute_pose_ICP();		//该函数体内对Table_ID_last、 pose_last进行了 "赋值"。动态反光板匹配使用的pose_last是ICP计算的结果
+
+			locateT = ros::Time::now();
+			predict_period_ = (locateT - registerT).toSec();
+			std::cout << "ICP定位周期："  << predict_period_ << std::endl;
+
 		}		
 		else
 		{
 			Initial_Flag = false;	//当动态定位失败之后，使用静态定位方法重新更新pose_linearSVD
 			std::cout << "dynamic regist failed!" << std::endl;
 		}
-	}	
+	}		
 }
 
 //将路径发布

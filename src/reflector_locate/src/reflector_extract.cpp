@@ -33,6 +33,12 @@ bool ReflectorExtract::init()
 分别赋予了不同的intensity:0,1,2,...便于区分*/
  void ReflectorExtract::clusterPointCallback(const sensor_msgs::PointCloud2 &msg)
  {
+
+	ros::Time time_last;
+	ros::Time time_current;
+	double predict_period_;
+	time_last = ros::Time::now();
+
 	pcl::PointCloud<pcl::PointXYZI> cloud;
 	pcl::fromROSMsg(msg, cloud);	//	将点云数据转换为pcl格式进行解析
 	geometry_msgs::Point point;
@@ -81,12 +87,22 @@ bool ReflectorExtract::init()
 	}
 	ref_msgs.id = ref_id;	//反光板总数
 	reflector_pub_.publish(ref_msgs);
+
+	time_current = ros::Time::now();
+	predict_period_ = (time_current - time_last).toSec();
+	std::cout << "聚类反光被信息提取 周期："  << predict_period_ << std::endl;
  }
 
 /*
 //读取原始的点云信息，根据强度信息从中提取反光板
 void ReflectorExtract::pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr& msg)
 {
+
+	ros::Time time_last;
+	ros::Time time_current;
+	double predict_period_;
+	time_last = ros::Time::now();
+
 	pcl::PointCloud<pcl::PointXYZI> cloud;
 	pcl::fromROSMsg(*msg, cloud);	//	将点云数据转换为pcl格式进行解析
 	geometry_msgs::Point point;
@@ -140,6 +156,10 @@ void ReflectorExtract::pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr
 	}
 	ref_msgs.id = ref_id;	//反光板总数
 	reflector_pub_.publish(ref_msgs);
+
+	time_current = ros::Time::now();
+	predict_period_ = (time_current - time_last).toSec();
+	std::cout << "普通非聚类反光被信息提取周期："  << predict_period_ << std::endl;
 }
 */
 int main(int argc, char* argv[])
