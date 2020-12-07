@@ -20,8 +20,8 @@ class ReflectorExtract
   ReflectorExtract();
   ~ReflectorExtract();
   bool init();
-  void clusterPointCallback(const sensor_msgs::PointCloud2 &msg);
-//  void pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr& msg);
+//  void clusterPointCallback(const sensor_msgs::PointCloud2 &msg);
+  void pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr& msg);
   bool controlLoop();
 
  private:

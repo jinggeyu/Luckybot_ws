@@ -23,14 +23,15 @@ bool ReflectorExtract::init()
   // *** geometry_msgs/Point[] ref_pose 反光板的位置（距离、角度）
 
   // initialize subscribers
-//	pointcloud_sub_  = nh_.subscribe("/rslidar_points", 10, &ReflectorExtract::pointCloudCallBack, this);
-	pointcloud_sub_  = nh_.subscribe("clusterPoint", 10, &ReflectorExtract::clusterPointCallback, this);
+	pointcloud_sub_  = nh_.subscribe("/rslidar_points", 10, &ReflectorExtract::pointCloudCallBack, this);
+//	pointcloud_sub_  = nh_.subscribe("clusterPoint", 10, &ReflectorExtract::clusterPointCallback, this);
 	return true;
 }
 
 /*从聚类后的点云中提取反光板信息*/
 /*聚类中已经把反光板的点云都提取出来，并且对于不同的反光被已经
 分别赋予了不同的intensity:0,1,2,...便于区分*/
+/*
  void ReflectorExtract::clusterPointCallback(const sensor_msgs::PointCloud2 &msg)
  {
 
@@ -92,8 +93,8 @@ bool ReflectorExtract::init()
 	predict_period_ = (time_current - time_last).toSec();
 	std::cout << "聚类反光被信息提取 周期："  << predict_period_ << std::endl;
  }
+*/
 
-/*
 //读取原始的点云信息，根据强度信息从中提取反光板
 void ReflectorExtract::pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr& msg)
 {
@@ -161,7 +162,7 @@ void ReflectorExtract::pointCloudCallBack(const sensor_msgs::PointCloud2ConstPtr
 	predict_period_ = (time_current - time_last).toSec();
 	std::cout << "普通非聚类反光被信息提取周期："  << predict_period_ << std::endl;
 }
-*/
+
 int main(int argc, char* argv[])
 {
 	ros::init(argc, argv, "reflector_extract");
