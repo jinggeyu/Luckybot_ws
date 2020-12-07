@@ -45,11 +45,12 @@ float ref_reflector[5][2] = {
 //	{-0.7, 1.2}, { 1.315, 1.600}, { 1.323, 0.000}, { 0.523, -1.325}, {-1.415, -0.400}
 //};
 
-/* 用来测试一次位姿计算耗时 在动态register_ID中调用
-ros::Time time_last;
-ros::Time time_current;
+//用来测试一次位姿计算耗时 在动态register_ID中调用
+ros::Time startT;
+ros::Time registerT;
+ros::Time locateT;
 double predict_period_;
-*/
+
 
 class RegisterReflector
 {
