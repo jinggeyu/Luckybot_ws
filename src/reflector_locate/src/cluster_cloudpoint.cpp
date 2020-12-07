@@ -100,7 +100,7 @@ void ClusterCloudpoint::init()
      pcl::PassThrough<pcl::PointXYZI> pass;
 	pass.setInputCloud(cloud_in);
 	pass.setFilterFieldName("z");
-	pass.setFilterLimits(-2, 5.0);
+	pass.setFilterLimits(-1, 2.0);
 	pass.filter(*cloud_filtered);
 
 	pass.setInputCloud(cloud_filtered);
@@ -180,6 +180,10 @@ void ClusterCloudpoint::init()
     clusterPointPub.publish(output_cloud);
 
 	endTime_cluster = clock();
+	std::cout << "聚类时间: " << (double)(endTime_cluster - startTime) / CLOCKS_PER_SEC << "s" << endl;
+
+/*
+	endTime_cluster = clock();
 	std::cout << "条件欧式聚类时间: " << (double)(endTime_cluster - endTime_filter) / CLOCKS_PER_SEC << "s" << endl;
 	std::cerr << "地面点滤除条件欧式聚类后点云: " << std::endl;
     std::cerr << *cloud_final << std::endl;
@@ -192,7 +196,7 @@ void ClusterCloudpoint::init()
 	viewer->addPointCloud(cloud_final, inten_color, "cloud");
 	viewer->addCoordinateSystem();
 	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "cloud");
-	
+*/	
  }
 
 int main(int argc, char** argv)
