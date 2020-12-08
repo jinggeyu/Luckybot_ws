@@ -270,7 +270,7 @@ if __name__ == '__main__':
 
         if not args.local:
             # environment at generation time
-            CMAKE_PREFIX_PATH = '/home/yujingge/Luckybot_ws/devel;/home/yujingge/usbcam_ws/devel;/home/yujingge/tb3_ws/devel;/home/yujingge/odom_ws/devel;/home/yujingge/test_ws/devel;/opt/ros/melodic;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm'.split(';')
+            CMAKE_PREFIX_PATH = '/home/yujingge/Luckybot_ws/devel;/home/yujingge/usbcam_ws/devel;/home/yujingge/tb3_ws/devel;/home/yujingge/odom_ws/devel;/home/yujingge/test_ws/devel;/opt/ros/melodic;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm;/home/yujingge/csm_ws/devel_isolated/csm'.split(';')
         else:
             # don't consider any other prefix path than this one
             CMAKE_PREFIX_PATH = []
