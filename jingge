@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Local Video Playback Example</title>
+</head>
+<body>
+  <h1>Local Video Playback Example</h1>
+  <video controls>
+    <source src="file:///sdcard/Pictures/WeiXin/movie.mp4" type="video/mp4">
+</body>
+</html>
